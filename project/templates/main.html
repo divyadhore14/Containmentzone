@@ -5,119 +5,71 @@
     
 </head>
 <body>
-    <style>
-    @import url('https://fonts.googleapis.com/css?family=Raleway');
-
-// Colors
-$blue: #32325d;
-$gray: #F5F6FA;
-$dark-gray: #6b7c93;
-$white: #fff;
-$border-rounded: 6px;
-
-
-// Mobile first
-*,
-*::before,
-*::after { 
-  box-sizing: border-box;
-}
-
-// Styling 
-html {
-  background-color: $gray;
-}
- 
-body {
-  padding: 1rem 0.5rem;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  font-family: 'Raleway',Sans-serif;
-}
-
-// Flexbox container
-.container {
-  display: flex;
-  -webkit-display: box;
-  -moz-display: box;
-  -ms-display: flexbox;
-  -webkit-display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  padding: 6%;
-  margin: 0;
-}
-
-// Popup UI
-.popup {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  background-color: $white;
-  border-radius: $border-rounded;
-  padding: 3rem 2rem;
-  box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+<style>
+html, body {
+  background: #333;
+  height: 100%;
+  overflow: hidden;
   text-align: center;
-  
-// Popup Texts & button
-  .popup-content {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-  }
-
-  .popup-title {
-    color: $blue;
-    font-size: 1.8em;
-    line-height: 1.5em;
-    font-weight: 900;
-    margin-top: 0;
-  }
-
-  .popup-body {
-    font-size: 1.1em;
-    line-height: 1.6em;
-    color: $dark-gray;
-    font-weight: 500;
-    margin-bottom: 2.1em;
-  }
-  
-  //Button Link
-  .popup-button {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 1em;
-    text-transform: uppercase;
-    color: $white;
-    
-    //Button shape & animation
-    border-radius: $border-rounded;
-    margin: 10px;
-    padding: 1em 3em;
-    background-size: 200% auto;
-    color: white;
-    box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
-    background-image: linear-gradient(to right, #895cf2 0%, #ffabf4 50%, #895cf2 100%);
-    transition: 0.5s;
-    &:hover {
-      background-position: right center;
-    }  
-  }  
 }
-    </style>
+
+.svg-wrapper {
+  height: 60px;
+	margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px;
+}
+
+.shape {
+  fill: transparent;
+  stroke-dasharray: 140 540;
+  stroke-dashoffset: -474;
+  stroke-width: 8px;
+  stroke: #19f6e8;
+}
+
+.text {
+  color: #fff;
+  font-family: 'Roboto Condensed';
+  font-size: 22px;
+  letter-spacing: 8px;
+  line-height: 32px;
+  position: relative;
+  top: -48px;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dasharray: 140 540;
+    stroke-dashoffset: -474;
+    stroke-width: 8px;
+  }
+  100% {
+    stroke-dasharray: 760;
+    stroke-dashoffset: 0;
+    stroke-width: 2px;
+  }
+}
+
+.svg-wrapper:hover .shape {
+  -webkit-animation: 0.5s draw linear forwards;
+  animation: 0.5s draw linear forwards;
+}
+
+</style>
     
-    <div class="container">
-  <div class="popup">
-    <div class="popup-content">
-      <h2 class="popup-title">Awesome!</h2>
-      <p class="popup-body">You just found my pastel gradient button.<br> Now, let's see what else it does. :P </p>
-      <a href="#0" class="popup-button">Hover me</a>
-    </div>  
-  </div>  
+<div class="svg-wrapper">
+  <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
+    <rect class="shape" height="60" width="320" />
+  </svg>
+ 
+   
+   <div class="text">
+					<input type="submit" class="button" value="Notify  me">
+				</div>
+    <p style="color:yellow;font-size:18px;">Click on Notify me to get alert message if you are in Containment Zone</p>
 </div>
 </body>
 </html>

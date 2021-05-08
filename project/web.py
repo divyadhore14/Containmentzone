@@ -5,14 +5,11 @@ import re
 import requests
 from flask_bootstrap import Bootstrap
 import smtplib
-import os
-#import Mail, Email, To, Content
-SUBJECT = "You are in Containment zone"
-s = smtplib.SMTP('smtp.gmail.com', 587)
-#from sendemail import sendmail,sendgridmail
-#import smtplib
+
 
 app = Flask(__name__)
+
+    
 bootstrap = Bootstrap(app) 
 app.secret_key = 'a'
 
@@ -97,18 +94,29 @@ def display():
     location = data['loc'].split(',')
     latitude = location[0]
     longitude = location[1]
-    a = ["chi","Pimpri"]
-    if city in a:
-        s = smtplib.SMTP('smtp.gmail.com', 587)
-        s.starttls()
-        s.login("cozo.containmentzone@gmail.com", "covid19cozo")
-        TEXT = "Hello "+username + ",\n\n"+ """Thanks for using CoZo app.You are in caontainment zone.Please take care and BE SAFE!!!!!! """ 
-        message  = 'Subject: {}\n\n{}'.format("you are in containment zone", TEXT)
-        sendmail(TEXT,email)
-        s.sendmail("cozo.containmentzone@gmail.com", email, message)
-        s.quit()
-            #sendgridmail(email,TEXT)
-   
+    return render_template('location.html',city=city)
+'''a = ["chi","Pimpri"]
+if city in a:
+    
+    print("its a zone")
+    message = "You are in containment zone .Please take care and be SAFE!!!USE Sanitizer and wear MASK."
+    server = smtplib.SMTP("smtp.gmail.com",587)
+    server.starttls()
+    server.login("cozo.containmentzone@gmail.com", "covid19cozo")
+    server.sendmail("cozo.containmentzone@gmail.com", email, message)
+        
+    #return render_template('location.html',city=city)'''
+    
+    
+    
+@app.route('/table')
+def table():
+    return render_template('table.html')
+
+@app.route('/link')
+def link():
+    return render_template('links.html')
+
    
 if __name__ == '__main__':
    app.run(host='0.0.0.0',debug = True,port = 8080)
