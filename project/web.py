@@ -89,40 +89,36 @@ def login():
 def display():
 
     global city
-  
+    res = requests.get('https://ipinfo.io/')
+    data = res.json()
+    city = data['city']
+    
+    a = ["chinchwad","Pimpri"]
+    
     if request.method == 'POST' :
-        mail = request.form['mail']
-        cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM location WHERE mail = % s', (mail, ))
-        account = cursor.fetchone()
-        print(account)
-        if account:
-            msg = 'You will be notified'
-        return render_template('location.html', msg = msg)
+        mail = request.form.get("mail")
+       
+        if city in a:
+            print("its a zone")
+            print(mail)
+            message = "You are in containment zone .Please take care and be SAFE!!!USE Sanitizer and wear MASK."
+            msg = 'Subject:{}\n\n'.format("Alerting mail",message)
+            server = smtplib.SMTP("smtp.gmail.com",587)
+            server.set_debuglevel(1)
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
+            server.login("cozo.containmentzone@gmail.com", "covid19cozo")
+            server.ehlo()
+            server.sendmail("cozo.containmentzone@gmail.com", mail, msg)
+            server.quit()
             
-        res = requests.get('https://ipinfo.io/')
-        data = res.json()
-
-        city = data['city']
-
-        location = data['loc'].split(',')
-        latitude = location[0]
-        longitude = location[1]
         
-        mysql.connection.commit()
-        print("its a zone")
+        return render_template('main.html', msg = msg)
+            
+        
         #Subject = "Alerting Mail"
-        message = "You are in containment zone .Please take care and be SAFE!!!USE Sanitizer and wear MASK."
-        msg = 'Subject:{}\n\n'.format("Alerting mail",message)
-        server = smtplib.SMTP("smtp.gmail.com",587)
-        server.set_debuglevel(1)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login("cozo.containmentzone@gmail.com", "covid19cozo")
-        server.ehlo()
-        server.sendmail("cozo.containmentzone@gmail.com", mail, msg)
-        server.quit()
+        
             
     
     return render_template('location.html',city=city)
