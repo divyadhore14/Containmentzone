@@ -17,7 +17,7 @@ html, body {
   height: 60px;
 	margin: 0 auto;
   position: relative;
-  top: 50%;
+  
   transform: translateY(-50%);
   width: 320px;
 }
@@ -31,13 +31,13 @@ html, body {
 }
 
 .text {
-  color: #fff;
+  color: #fff00;
   font-family: 'Roboto Condensed';
   font-size: 22px;
   letter-spacing: 8px;
   line-height: 32px;
   position: relative;
-  top: -48px;
+  top: 300px;
 }
 
 @keyframes draw {
@@ -59,17 +59,20 @@ html, body {
 }
 
 </style>
-    
+ <form>
+ <br>
+ <br>
+ <input type="text"  name="mail" class="input"  id="mail" style="position: absolute; left: 20%; margin-left: 180px; width: 400px; height: 25px; background:grey ; border: 8px solid black; top:250px" placeholder="Enter email-id" required>
+  
 <div class="svg-wrapper">
-  <svg height="60" width="320" xmlns="http://www.w3.org/2000/svg">
-    <rect class="shape" height="60" width="320" />
-  </svg>
- 
-   
-   <div class="text">
-					<input type="submit" class="button" value="Notify  me">
-				</div>
-    <p style="color:yellow;font-size:18px;">Click on Notify me to get alert message if you are in Containment Zone</p>
+  
+
+	<div>				
+   <button type="submit" id="button" class="text" style="color:yellow; top:300px;background-color:#99ffff"> Notify me</button>
+<p style="color:yellow;font-size:18px;top:300px">Enter email address to be notified on and Click on Notify me to get alert message if you are in Containment Zone</p>
+</div>
+ </form>  
+    
 </div>
 </body>
 </html>

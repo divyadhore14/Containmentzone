@@ -5,10 +5,10 @@ import re
 import requests
 from flask_bootstrap import Bootstrap
 import smtplib
-
+from email.message import EmailMessage
 
 app = Flask(__name__)
-
+global email
     
 bootstrap = Bootstrap(app) 
 app.secret_key = 'a'
@@ -27,6 +27,7 @@ def homer():
    
 @app.route('/log', methods =['GET', 'POST'])
 def register():
+    global email
     msg = ''
     if request.method == 'POST' :
     
@@ -58,7 +59,7 @@ def register():
 
 @app.route('/reg',methods =['GET', 'POST'])
 def login():
-    global userid
+    global email
     msg = ''
    
   
@@ -86,26 +87,45 @@ def login():
 
 @app.route('/loc',methods =['GET', 'POST'])
 def display():
-    res = requests.get('https://ipinfo.io/')
-    data = res.json()
 
-    city = data['city']
+    global city
+  
+    if request.method == 'POST' :
+        mail = request.form['mail']
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM location WHERE mail = % s', (mail, ))
+        account = cursor.fetchone()
+        print(account)
+        if account:
+            msg = 'You will be notified'
+        return render_template('location.html', msg = msg)
+            
+        res = requests.get('https://ipinfo.io/')
+        data = res.json()
 
-    location = data['loc'].split(',')
-    latitude = location[0]
-    longitude = location[1]
-    return render_template('location.html',city=city)
-'''a = ["chi","Pimpri"]
-if city in a:
-    
-    print("its a zone")
-    message = "You are in containment zone .Please take care and be SAFE!!!USE Sanitizer and wear MASK."
-    server = smtplib.SMTP("smtp.gmail.com",587)
-    server.starttls()
-    server.login("cozo.containmentzone@gmail.com", "covid19cozo")
-    server.sendmail("cozo.containmentzone@gmail.com", email, message)
+        city = data['city']
+
+        location = data['loc'].split(',')
+        latitude = location[0]
+        longitude = location[1]
         
-    #return render_template('location.html',city=city)'''
+        mysql.connection.commit()
+        print("its a zone")
+        #Subject = "Alerting Mail"
+        message = "You are in containment zone .Please take care and be SAFE!!!USE Sanitizer and wear MASK."
+        msg = 'Subject:{}\n\n'.format("Alerting mail",message)
+        server = smtplib.SMTP("smtp.gmail.com",587)
+        server.set_debuglevel(1)
+        server.ehlo()
+        server.starttls()
+        server.ehlo()
+        server.login("cozo.containmentzone@gmail.com", "covid19cozo")
+        server.ehlo()
+        server.sendmail("cozo.containmentzone@gmail.com", mail, msg)
+        server.quit()
+            
+    
+    return render_template('location.html',city=city)
     
     
     
